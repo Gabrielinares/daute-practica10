@@ -62,8 +62,9 @@
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                        <form action="" method="POST">
+                        <form action="${pageContext.servletContext.contextPath}/ClienteServlet" method="POST">
                             <div class="modal-body">
+
                                 Código
                                 <input type="text" name="txtCodigo" id="txtCodigo" class="form-control" value="0" readonly>
                                 Nombre
@@ -71,7 +72,8 @@
                                 Edad
                                 <input type="number" name="txtEdad" id="txtEdad" class="form-control">
                                 Categoría
-                                <select name="sCategoria" class="form-control" id="sCategoria">                                    
+                                <select name="sCategoria" class="form-control" id="sCategoria">
+
 
                                 </select>
                             </div>
