@@ -4,6 +4,13 @@
     Author     : gabriel
 --%>
 
+<%@page import="com.modelo.Categoria"%>
+<%@page import="com.modelo.Cliente" %>
+<%@page import="java.util.ArrayList" %>
+<%@page import="com.dao.CategoriaDAO" %>
+<%@page import="com.dao.ClienteDAO" %>
+
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <html>
     <head>
@@ -16,6 +23,10 @@
         <script src="${pageContext.servletContext.contextPath}/bootstrap/bootstrap.min.js"></script> 
     </head>
     <body>       
+        <%! 
+            CategoriaDAO cdao = new CategoriaDAO();
+            ClienteDAO clienteDAO  = new ClienteDAO();
+        %>
         <%@include file="../template/menu.jsp" %>
         <div class="container mt-4">
             <h1>Clientes</h1>
@@ -37,18 +48,25 @@
                     </tr>
                 </thead>
                 <tbody>
+                    <%
+                        ArrayList<Cliente> listCliente = clienteDAO.mostrarClientes();
+                        
+                        for (Cliente elem : listCliente) {
+        
+                    %>
                     <tr>
-                        <td>1</td>
-                        <td>Ejemplo</td>
-                        <td>Ejemplo</td>
-                        <td>Ejemplo</td>
+                        <td class="codigo"><%= elem.getIdCliente() %></td>
+                        <td class="nombre"><%= elem.getNombre()%></td>
+                        <td class="edad"><%= elem.getEdad()%></td>
+                        <td class="categoria"><%= elem.getIdCategoria() %></td>
                         <td>
                             <div class="btn-group">
                                 <button type="button" class="btn btn-success" data-toggle="modal" data-target="#mdlFormulario" id="editar">Editar</button>
                                 <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#mdlFormulario" id="eliminar">Eliminar</button>
                             </div>
                         </td>
-                    </tr>                                       
+                    </tr>
+                    <% } %>
                 </tbody>
             </table>
 
@@ -74,6 +92,14 @@
                                 Categoría
                                 <select name="sCategoria" class="form-control" id="sCategoria">
 
+                                    <%
+                                        ArrayList<Categoria> lista = cdao.mostrarCategorias();
+                                        for (Categoria elem : lista) {
+                                                
+                                            
+                                    %>
+                                    <option value="<%= elem.getIdCategoria() %>"> <%= elem.getCategoria() %> </option>
+                                    <% } %>
 
                                 </select>
                             </div>
