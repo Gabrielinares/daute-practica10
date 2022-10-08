@@ -23,7 +23,7 @@ public class CategoriaDAO extends Conexion{
             while (rs.next()) {
                 Categoria c = new Categoria();
                 c.setIdCategoria((rs.getInt(1)));
-                c.setCategoria(rs.getString(1));
+                c.setCategoria(rs.getString(2));
                 lista.add(c);
             }
         } catch (SQLException e) {

@@ -22,9 +22,9 @@
         <script src="${pageContext.servletContext.contextPath}/bootstrap/bootstrap.min.js"></script> 
     </head>
     <body>       
-        <% 
+        <%
             CategoriaDAO cdao = new CategoriaDAO();
-            ClienteDAO clienteDAO  = new ClienteDAO();
+            ClienteDAO clienteDAO = new ClienteDAO();
         %>
         <%@include file="../template/menu.jsp" %>
         <div class="container mt-4">
@@ -48,15 +48,15 @@
                 </thead>
                 <tbody>
                     <%
-                        ArrayList<Cliente> listCliente = clienteDAO.mostrarClientes();                       
+                        ArrayList<Cliente> listCliente = clienteDAO.mostrarClientes();
                         for (Cliente elem : listCliente) {
-        
+
                     %>
                     <tr>
-                        <td class="codigo"><%= elem.getIdCliente() %></td>
+                        <td class="codigo"><%= elem.getIdCliente()%></td>
                         <td class="nombre"><%= elem.getNombre()%></td>
                         <td class="edad"><%= elem.getEdad()%></td>
-                        <td class="categoria"><%= elem.getIdCategoria() %></td>
+                        <td class="categoria"><%= elem.getIdCategoria()%></td>
                         <td>
                             <div class="btn-group">
                                 <button type="button" class="btn btn-success" data-toggle="modal" data-target="#mdlFormulario" id="editar">Editar</button>
@@ -93,10 +93,10 @@
                                     <%
                                         ArrayList<Categoria> lista = cdao.mostrarCategorias();
                                         for (Categoria elem : lista) {
-                                                
-                                            
+
+
                                     %>
-                                    <option value="<%= elem.getIdCategoria() %>"> <%= elem.getCategoria() %> </option>
+                                    <option value="<%= elem.getIdCategoria()%>"> <%= elem.getCategoria()%> </option>
                                     <% } %>
 
                                 </select>
@@ -112,14 +112,15 @@
                 </div>
             </div>
         </div>
-                                    <%
-                                        if(request.getAttribute("msj") != null){
-                                            
-                                        
-                                    %>
-                                    <script>alert('<%= request.getAttribute("msj") %>')</script>
-                                    <%
-                                        }
-                                    %>
+        <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+        <%
+            if (request.getAttribute("msj") != null) {
+
+
+        %>
+        <script>alert('<%= request.getAttribute("msj")%>')</script>
+        <%
+            }
+        %>
     </body>
 </html>

@@ -4,6 +4,12 @@
     Author     : gabriel
 --%>
 
+<%@page import="com.modelo.Categoria"%>
+<%@page import="com.modelo.Cliente" %>
+<%@page import="java.util.ArrayList" %>
+<%@page import="com.dao.CategoriaDAO" %>
+<%@page import="com.dao.ClienteDAO" %>
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <html>
     <head>
@@ -16,6 +22,10 @@
         <script src="${pageContext.servletContext.contextPath}/bootstrap/bootstrap.min.js"></script> 
     </head>
     <body>       
+        <% 
+            CategoriaDAO cdao = new CategoriaDAO();
+            ClienteDAO clienteDAO  = new ClienteDAO();
+        %>
         <%@include file="../template/menu.jsp" %>
         <div class="container mt-4">
             <h1>Clientes</h1>
@@ -37,18 +47,24 @@
                     </tr>
                 </thead>
                 <tbody>
+                    <%
+                        ArrayList<Cliente> listCliente = clienteDAO.mostrarClientes();                       
+                        for (Cliente elem : listCliente) {
+        
+                    %>
                     <tr>
-                        <td>1</td>
-                        <td>Ejemplo</td>
-                        <td>Ejemplo</td>
-                        <td>Ejemplo</td>
+                        <td class="codigo"><%= elem.getIdCliente() %></td>
+                        <td class="nombre"><%= elem.getNombre()%></td>
+                        <td class="edad"><%= elem.getEdad()%></td>
+                        <td class="categoria"><%= elem.getIdCategoria() %></td>
                         <td>
                             <div class="btn-group">
                                 <button type="button" class="btn btn-success" data-toggle="modal" data-target="#mdlFormulario" id="editar">Editar</button>
                                 <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#mdlFormulario" id="eliminar">Eliminar</button>
                             </div>
                         </td>
-                    </tr>                                       
+                    </tr>
+                    <% } %>
                 </tbody>
             </table>
 
@@ -62,8 +78,9 @@
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                        <form action="" method="POST">
+                        <form action="${pageContext.servletContext.contextPath}/ClienteServlet" method="POST">
                             <div class="modal-body">
+
                                 Código
                                 <input type="text" name="txtCodigo" id="txtCodigo" class="form-control" value="0" readonly>
                                 Nombre
@@ -71,13 +88,22 @@
                                 Edad
                                 <input type="number" name="txtEdad" id="txtEdad" class="form-control">
                                 Categoría
-                                <select name="sCategoria" class="form-control" id="sCategoria">                                    
+                                <select name="txtCategoria" class="form-control" id="sCategoria">
+
+                                    <%
+                                        ArrayList<Categoria> lista = cdao.mostrarCategorias();
+                                        for (Categoria elem : lista) {
+                                                
+                                            
+                                    %>
+                                    <option value="<%= elem.getIdCategoria() %>"> <%= elem.getCategoria() %> </option>
+                                    <% } %>
 
                                 </select>
                             </div>
                             <div class="modal-footer">
                                 <button class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                                <button class="btn btn-primary" name="btnAgregar" id="btnAgregar">Agregar</button>
+                                <button type="submit" class="btn btn-primary" name="btnAgregar" id="btnAgregar">Agregar</button>
                                 <button class="btn btn-success" name="btnEditar" id="btnEditar">Editar</button>
                                 <button class="btn btn-danger" name="btnEliminar" id="btnEliminar">Eliminar</button>
                             </div>
@@ -86,5 +112,14 @@
                 </div>
             </div>
         </div>
+                                    <%
+                                        if(request.getAttribute("msj") != null){
+                                            
+                                        
+                                    %>
+                                    <script>alert('<%= request.getAttribute("msj") %>')</script>
+                                    <%
+                                        }
+                                    %>
     </body>
 </html>
