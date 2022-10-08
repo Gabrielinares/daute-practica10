@@ -47,6 +47,8 @@ public class LoginServlet extends HttpServlet {
                     request.setAttribute("msj", "Usuario o contraseña incorrectos");
                 }
             }
+            
+            request.getRequestDispatcher("login.jsp").forward(request, response);
         }
     }
 

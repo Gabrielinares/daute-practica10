@@ -9,117 +9,45 @@
 <%@page import="java.util.ArrayList" %>
 <%@page import="com.dao.CategoriaDAO" %>
 <%@page import="com.dao.ClienteDAO" %>
-
+<%@page session="true" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+
+
+<%
+
+    HttpSession sesion = request.getSession();
+
+    String user = "";
+    String acceso = "";
+
+    if (sesion.getAttribute("usuario") != null && sesion.getAttribute("acceso") != null && sesion != null) {
+        user = sesion.getAttribute("usuario").toString();
+        acceso = sesion.getAttribute("acceso").toString();
+
+        //if (acceso != "administrador") {
+        //    response.sendRedirect("index.jsp");
+        //}
+    } else {
+        response.sendRedirect("login.jsp");
+    }
+%>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Cliente</title>
+        <title>Indice</title>
         <!-- CSS de Bootstrap -->
         <link rel="stylesheet" href="${pageContext.servletContext.contextPath}/bootstrap/bootstrap.min.css"/>
+    </head>
+    <body>
+        <div class="container">
+            <%@include file="template/menu.jsp" %>
+            <h1>Bienvenido <%= user %> al sistema de Ventas</h1>
+        </div>
+    <https://teams.microsoft.com/l/message/19:3Ay1aS9B0KAE_Px1PfMItvHNoT84BfJLMMajXy9x8uU1@thread.tacv2/1665192449895?tenantId=30eba0aa-52f2-4167-943c-cf0fac5438a7&amp;groupId=8c26a4dd-0f0e-4c1a-a0fb-a85be9efe87e&amp;parentMessageId=1665167794497&amp;teamName=DAUTE SISV11A - PRACTICA&amp;channelName=General&amp;createdTime=1665192449895&amp;allowXTenantAccess=false>
         <!-- JS de Bootstrap -->
         <script src="${pageContext.servletContext.contextPath}/bootstrap/jquery-3.6.1.min.js"></script>
         <script src="${pageContext.servletContext.contextPath}/bootstrap/bootstrap.min.js"></script> 
-    </head>
-    <body>       
-        <% 
-            CategoriaDAO cdao = new CategoriaDAO();
-            ClienteDAO clienteDAO  = new ClienteDAO();
-        %>
-        <%@include file="../template/menu.jsp" %>
-        <div class="container mt-4">
-            <h1>Clientes</h1>
-            <hr>
-            <!-- Botón para agregar -->
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#mdlFormulario">
-                Agregar cliente
-            </button>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
-            <!-- Tabla -->
-            <table class="table mt-4">
-                <thead class="thead-light">
-                    <tr>
-                        <th scope="col">Código</th>
-                        <th scope="col">Cliente</th>
-                        <th scope="col">Edad</th>
-                        <th scope="col">Categoría</th>
-                        <th scope="col">Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <%
-                        ArrayList<Cliente> listCliente = clienteDAO.mostrarClientes();                       
-                        for (Cliente elem : listCliente) {
-        
-                    %>
-                    <tr>
-                        <td class="codigo"><%= elem.getIdCliente() %></td>
-                        <td class="nombre"><%= elem.getNombre()%></td>
-                        <td class="edad"><%= elem.getEdad()%></td>
-                        <td class="categoria"><%= elem.getIdCategoria() %></td>
-                        <td>
-                            <div class="btn-group">
-                                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#mdlFormulario" id="editar">Editar</button>
-                                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#mdlFormulario" id="eliminar">Eliminar</button>
-                            </div>
-                        </td>
-                    </tr>
-                    <% } %>
-                </tbody>
-            </table>
-
-            <!-- Modal para agregar-->
-            <div class="modal fade" id="mdlFormulario">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title">Cliente</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <form action="${pageContext.servletContext.contextPath}/ClienteServlet" method="POST">
-                            <div class="modal-body">
-
-                                Código
-                                <input type="text" name="txtCodigo" id="txtCodigo" class="form-control" value="0" readonly>
-                                Nombre
-                                <input type="text" name="txtNombre" id="txtNombre" class="form-control">
-                                Edad
-                                <input type="number" name="txtEdad" id="txtEdad" class="form-control">
-                                Categoría
-                                <select name="txtCategoria" class="form-control" id="sCategoria">
-
-                                    <%
-                                        ArrayList<Categoria> lista = cdao.mostrarCategorias();
-                                        for (Categoria elem : lista) {
-                                                
-                                            
-                                    %>
-                                    <option value="<%= elem.getIdCategoria() %>"> <%= elem.getCategoria() %> </option>
-                                    <% } %>
-
-                                </select>
-                            </div>
-                            <div class="modal-footer">
-                                <button class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                                <button type="submit" class="btn btn-primary" name="btnAgregar" id="btnAgregar">Agregar</button>
-                                <button class="btn btn-success" name="btnEditar" id="btnEditar">Editar</button>
-                                <button class="btn btn-danger" name="btnEliminar" id="btnEliminar">Eliminar</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-                                    <%
-                                        if(request.getAttribute("msj") != null){
-                                            
-                                        
-                                    %>
-                                    <script>alert('<%= request.getAttribute("msj") %>')</script>
-                                    <%
-                                        }
-                                    %>
     </body>
 </html>

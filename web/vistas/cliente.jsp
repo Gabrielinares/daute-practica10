@@ -10,7 +10,28 @@
 <%@page import="com.dao.CategoriaDAO" %>
 <%@page import="com.dao.ClienteDAO" %>
 
+<%@page session="true" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+
+
+<%
+
+    HttpSession sesion = request.getSession();
+
+    String user = "";
+    String acceso = "";
+
+    if (sesion.getAttribute("usuario") != null && sesion.getAttribute("acceso") != null && sesion != null) {
+        user = sesion.getAttribute("usuario").toString();
+        acceso = sesion.getAttribute("acceso").toString();
+
+        //if (acceso != "administrador") {
+        //    response.sendRedirect("index.jsp");
+        //}
+    } else {
+        response.sendRedirect("login.jsp");
+    }
+%>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
