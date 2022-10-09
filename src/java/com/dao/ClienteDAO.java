@@ -47,7 +47,7 @@ public class ClienteDAO extends Conexion{
                 c.setNombre(rs.getString(2));
                 c.setEdad(rs.getInt(3));
                 c.setIdCategoria(rs.getInt(4));
-                c.setCategoria(rs.getString(5));
+                c.setCategoria(rs.getString(6));
 
                 lista.add(c);
             }

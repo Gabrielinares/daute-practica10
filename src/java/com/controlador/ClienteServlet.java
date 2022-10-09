@@ -49,6 +49,16 @@ public class ClienteServlet extends HttpServlet {
                 if (res != 0) {
                     mensaje = "Registro guardado";
                 }
+            } else if (request.getParameter("btnEditar") != null){
+                res = clienteDAO.modificarCliente(cliente);
+                if (res != 0) {
+                    mensaje = "Registro modificado";
+                }
+            } else if (request.getParameter("btnEliminar") != null){
+                res = clienteDAO.eliminarCliente(cliente);
+                if (res != 0) {
+                    mensaje = "Registro eliminado";
+                }
             }
             
             request.setAttribute("msj", mensaje);

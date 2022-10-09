@@ -77,11 +77,11 @@
                         <td class="codigo"><%= elem.getIdCliente()%></td>
                         <td class="nombre"><%= elem.getNombre()%></td>
                         <td class="edad"><%= elem.getEdad()%></td>
-                        <td class="categoria"><%= elem.getIdCategoria()%></td>
+                        <td class="categoria"><%= elem.getCategoria()%></td>
                         <td>
                             <div class="btn-group">
-                                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#mdlFormulario" id="editar">Editar</button>
-                                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#mdlFormulario" id="eliminar">Eliminar</button>
+                                <button type="button" class="btn btn-success btnEditar" data-toggle="modal" data-target="#mdlFormulario">Editar</button>
+                                <button type="button" class="btn btn-danger btnEliminar" data-toggle="modal" data-target="#mdlFormulario">Eliminar</button>
                             </div>
                         </td>
                     </tr>
@@ -90,18 +90,17 @@
             </table>
 
             <!-- Modal para agregar-->
-            <div class="modal fade" id="mdlFormulario">
+            <div class="modal fade" id="mdlFormulario" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title">Cliente</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                        <form action="${pageContext.servletContext.contextPath}/ClienteServlet" method="POST">
-                            <div class="modal-body">
-
+                        <div class="modal-body">
+                            <form action="${pageContext.servletContext.contextPath}/ClienteServlet" method="POST" role="form">
                                 Código
                                 <input type="text" name="txtCodigo" id="txtCodigo" class="form-control" value="0" readonly>
                                 Nombre
@@ -109,7 +108,7 @@
                                 Edad
                                 <input type="number" name="txtEdad" id="txtEdad" class="form-control">
                                 Categoría
-                                <select name="txtCategoria" class="form-control" id="sCategoria">
+                                <select name="txtCategoria" id="txtCategoria" class="form-control" >
 
                                     <%
                                         ArrayList<Categoria> lista = cdao.mostrarCategorias();
@@ -121,19 +120,23 @@
                                     <% } %>
 
                                 </select>
-                            </div>
-                            <div class="modal-footer">
-                                <button class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                                <button type="submit" class="btn btn-primary" name="btnAgregar" id="btnAgregar">Agregar</button>
-                                <button class="btn btn-success" name="btnEditar" id="btnEditar">Editar</button>
-                                <button class="btn btn-danger" name="btnEliminar" id="btnEliminar">Eliminar</button>
-                            </div>
-                        </form>
+
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-primary" name="btnAgregar" id="btnAgregar">Agregar</button>
+                                    <button type="submit" class="btn btn-success" name="btnEditar" id="btnEditar">Editar</button>
+                                    <button type="submit" class="btn btn-danger" name="btnEliminar" id="btnEliminar">Eliminar</button>
+                                    <button class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-        <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+        <script src="${pageContext.servletContext.contextPath}/bootstrap/jquery-3.6.1.min.js"></script>
+        <script src="${pageContext.servletContext.contextPath}/bootstrap/bootstrap.min.js"></script> 
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
         <%
             if (request.getAttribute("msj") != null) {
 
@@ -143,5 +146,6 @@
         <%
             }
         %>
+        <script src="${pageContext.servletContext.contextPath}/js/cliente.js"></script>
     </body>
 </html>
