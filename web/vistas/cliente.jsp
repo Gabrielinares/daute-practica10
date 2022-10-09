@@ -38,6 +38,8 @@
         <title>Cliente</title>
         <!-- CSS de Bootstrap -->
         <link rel="stylesheet" href="${pageContext.servletContext.contextPath}/bootstrap/bootstrap.min.css"/>
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap5.min.css"/>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.4.38/sweetalert2.min.css" integrity="sha512-r+ShOkTmhH/y+MOeQfVL1mW0dMcD/54nFOEmwn+gl4DCw9SAzWCqedtsefIy52x/amO1ZSsULwgDxU9BIdabqQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
         <!-- JS de Bootstrap -->
         <script src="${pageContext.servletContext.contextPath}/bootstrap/jquery-3.6.1.min.js"></script>
         <script src="${pageContext.servletContext.contextPath}/bootstrap/bootstrap.min.js"></script> 
@@ -50,14 +52,15 @@
         <%@include file="../template/menu.jsp" %>
         <div class="container mt-4">
             <h1>Clientes</h1>
-            <hr>
             <!-- Botón para agregar -->
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#mdlFormulario">
+            <button type="button" class="btn btn-primary btnAgregar" data-toggle="modal" data-target="#mdlFormulario">
                 Agregar cliente
             </button>
 
+            <hr>
+
             <!-- Tabla -->
-            <table class="table mt-4">
+            <table class="table mt-4" id="myDataTable">
                 <thead class="thead-light">
                     <tr>
                         <th scope="col">Código</th>
@@ -122,9 +125,9 @@
                                 </select>
 
                                 <div class="modal-footer">
-                                    <button type="submit" class="btn btn-primary" name="btnAgregar" id="btnAgregar">Agregar</button>
-                                    <button type="submit" class="btn btn-success" name="btnEditar" id="btnEditar">Editar</button>
-                                    <button type="submit" class="btn btn-danger" name="btnEliminar" id="btnEliminar">Eliminar</button>
+                                    <button type="submit" class="btn btn-primary btnOcultar1" name="btnAgregar" id="btnAgregar">Agregar</button>
+                                    <button type="submit" class="btn btn-success btnOcultar" name="btnEditar" id="btnEditar">Editar</button>
+                                    <button type="submit" class="btn btn-danger btnOcultar" name="btnEliminar" id="btnEliminar">Eliminar</button>
                                     <button class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
 
                                 </div>
@@ -137,12 +140,25 @@
         <script src="${pageContext.servletContext.contextPath}/bootstrap/jquery-3.6.1.min.js"></script>
         <script src="${pageContext.servletContext.contextPath}/bootstrap/bootstrap.min.js"></script> 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+        <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.4.38/sweetalert2.all.min.js" integrity="sha512-Seif2uAXvJIyl61NjJSAr6yFQFE+DtMAPNeW99nWcSqYbC6sqvdx5yZZn9p49NZLX3bnV5imWv22P4cwtf0krg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
         <%
             if (request.getAttribute("msj") != null) {
 
 
         %>
-        <script>alert('<%= request.getAttribute("msj")%>')</script>
+        <script>
+            $(document).ready(function () {
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'success',
+                    title: '<%= request.getAttribute("msj")%>',
+                    showConfirmButton: false,
+                    timer: 3000
+                }); 
+            });
+        </script>
         <%
             }
         %>

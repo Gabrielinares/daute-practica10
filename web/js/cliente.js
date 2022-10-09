@@ -14,16 +14,31 @@ function llenarForm(fila) {
 
 $(document).ready(function () {
 
-    $("#mdlFormulario").on("hidden.bs.modal", function(){
+    $('#myDataTable').DataTable();
+
+
+    $("#mdlFormulario").on("hidden.bs.modal", function () {
         $("form")[0].reset();
         $("#txtCategoria option[selected]").removeAttr('selected');
     });
 
     $(document).on('click', '.btnEditar', function () {
         llenarForm($(this).closest('tr'));
+        $(".btnOcultar1").attr('disabled', 'disabled');
+        $(".btnOcultar").removeAttr('disabled');
+
     });
-    
+
     $(document).on('click', '.btnEliminar', function () {
         llenarForm($(this).closest('tr'));
+        $(".btnOcultar1").attr('disabled', 'disabled');
+        $(".btnOcultar").removeAttr('disabled');
+
+    });
+
+    $(document).on('click', '.btnAgregar', function () {
+        $(".btnOcultar").attr('disabled', 'disabled');
+        $(".btnOcultar1").removeAttr('disabled');
+
     });
 });
